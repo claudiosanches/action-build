@@ -1,0 +1,16 @@
+name: 'Build WordPress Project'
+description: 'Build a WordPress project with NPM and Composer'
+inputs:
+  generate-zip:
+    description: 'Generate package zip file?'
+    default: false
+outputs:
+  path:
+    description: 'Build path'
+  zip_path:
+    description: 'Zip file path'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.generate-zip }}
