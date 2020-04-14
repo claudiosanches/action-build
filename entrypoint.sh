@@ -11,7 +11,7 @@ if [ -z $1 ]; then
 fi
 
 # If not configured defaults to repository name
-if [[ -z "$PLUGIN_SLUG" ]]; then
+if [ -z "$PLUGIN_SLUG" ]; then
 	PLUGIN_SLUG=${GITHUB_REPOSITORY#*/}
 fi
 
