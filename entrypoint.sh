@@ -3,7 +3,6 @@
 # Set variables
 GENERATE_ZIP=false
 BUILD_PATH="$(pwd)/build"
-zip_path=""
 
 # Set options based on user input
 if [ -z $1 ]; then
@@ -16,7 +15,8 @@ if [ -z "$PLUGIN_SLUG" ]; then
 fi
 
 # Set GitHub "path" output
-path="$BUILD_PATH/$PLUGIN_SLUG"
+DEST_PATH="$BUILD_PATH/$PLUGIN_SLUG"
+echo "::set-output name=path::$DEST_PATH"
 
 cd "$GITHUB_WORKSPACE" || exit
 
@@ -30,15 +30,15 @@ composer install --no-dev || exit "$?"
 
 echo "Generating build directory..."
 rm -rf "$BUILD_PATH"
-mkdir -p "$path"
-rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" "$path/" --delete --delete-excluded
+mkdir -p "$DEST_PATH"
+rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" "$DEST_PATH/" --delete --delete-excluded
 
 if ! $GENERATE_ZIP; then
   echo "Generating zip file..."
   cd "$BUILD_PATH" || exit
   zip -r "${PLUGIN_SLUG}.zip" "$PLUGIN_SLUG/"
-  # Set GitHub "path" output
-  zip_path="$BUILD_PATH/${PLUGIN_SLUG}.zip"
+  # Set GitHub "zip_path" output
+  echo "::set-output name=zip_path::$BUILD_PATH/${PLUGIN_SLUG}.zip"
   echo "Zip file generated!"
 fi
 
