@@ -2,7 +2,7 @@
 
 # Set variables
 GENERATE_ZIP=false
-BUILD_PATH="$(pwd)/build"
+BUILD_PATH="./build"
 
 # Set options based on user input
 if [ -z $1 ]; then
