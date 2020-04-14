@@ -18,6 +18,8 @@ fi
 # Set GitHub "path" output
 path="$BUILD_PATH/$PLUGIN_SLUG"
 
+cd "$GITHUB_WORKSPACE" || exit
+
 echo "Installing PHP and JS dependencies..."
 npm install
 composer install || exit "$?"
